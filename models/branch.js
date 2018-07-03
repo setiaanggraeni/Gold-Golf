@@ -1,10 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Branch = sequelize.define('Branch', {
-    area: DataTypes.STRING
+    branchName: DataTypes.STRING,
+    latitude: DataTypes.STRING,
+    longtitude: DataTypes.STRING
   }, {});
   Branch.associate = function(models) {
-    // associations can be defined here
+    Branch.hasMany(models.User)
   };
+
   return Branch;
 };
