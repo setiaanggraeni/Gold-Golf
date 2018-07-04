@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const model = require('../models')
+const passwordGenerator = require('../helper/crypto')
 
 router.get('/', function(req, res){
     res.render('home')
@@ -32,7 +33,7 @@ router.post('/register', function(req, res){
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         username: req.body.username,
-        password: req.body.password,
+        password: passwordGenerator(req.body.password),
         birthdate: req.body.birthdate,
         email: req.body.email,
         phone: req.body.phone,
