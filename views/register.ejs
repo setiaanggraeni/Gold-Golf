@@ -21,7 +21,7 @@
   <input type="date" name="birthdate">
   <br>
   Email:<br>
-  <input type="text" name="email">
+  <input type="email" name="email">
   <br>
   Phone:<br>
   <input type="text" name="phone">
@@ -29,17 +29,22 @@
   Address:<br>
   <input type="text" name="address">
   <br>
+  Gender:<br>
+  <select name="gender">
+      <option value="female">Female</option>
+      <option value="male">Male</option>
+    </select>  <br>
   Latitude:<br>
   <input type="text" name="latitude">
   <br>
   Longitude:<br>
   <input type="text" name="longitude">
   <br>
+  Branch: <br>
   <select name="BranchId">
-    <option value="1"> South</option>
-    <option value="2"> East</option>
-    <option value="3"> West</option>
-    <option value="4"> North</option>
+    <% branches.forEach(branch => { %>
+      <option value="<%= branch.id%>"> <%= branch.branchName%></option>
+    <% }) %>
   </select>
   <br><br>
   <input type="submit" value="Register">

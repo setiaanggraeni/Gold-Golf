@@ -15,16 +15,22 @@ module.exports = (sequelize, DataTypes) => {
     isAdmin: {
       type: DataTypes.INTEGER,
       defaultValue: 0
-    }
+    },
+    gender: DataTypes.STRING
   }, {
     hooks: {
       beforeCreate: (user, options) => {
-        user.firstName = `Mr/Mrs. ${user.firstName}`;
+        if(user.gender === "female"){
+          user.firstName = `Mrs. ${user.firstName}`;
+        } else{
+          user.firstName = `Mr. ${user.firstName}`;
+        }
       }
     }
   });
+  
   User.associate = function(models) {
-    User.hasMany(models.Branch)
+    User.belongsToMany(models.Branch, {through: 'User_Branch'})
   };
 
   // instance method
