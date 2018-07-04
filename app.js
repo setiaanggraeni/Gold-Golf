@@ -1,15 +1,14 @@
 const express = require('express')
 const app = express()
 const routes = require('./routes')
-const routesMember = require('./routes/members')
+const routesAdmin = require('./routes/admin')
+const routesUser = require('./routes/users')
 const model = require('./models')
 const session = require('express-session')
 const passwordGenerator = require('./helper/crypto')
 
 app.use(express.urlencoded ({extended: false}))
-app.use('/', routes)
-app.use('/members', routesMember)
-app.set('view engine', 'ejs')
+// HARUS taruh session sebelum app.use
 
 app.use(session({
     secret: 'GG app',
@@ -17,8 +16,12 @@ app.use(session({
     cookie: {}
   }))
 
+app.use('/', routes)
+app.use('/admin', routesAdmin)
+app.use('/users', routesUser)
+app.set('view engine', 'ejs')
 app.listen(3000, function(){
-    console.log('Fuck yaahhh!')
+    console.log('go go go!')
 })
 
 

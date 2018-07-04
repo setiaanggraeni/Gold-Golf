@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     BranchId: DataTypes.INTEGER
   }, {});
   User_Branch.associate = function(models) {
-    User_Branch.belongsTo(models.User, {through: 'User_Branch'});
-    User_Branch.belongsTo(models.Branch, {through: 'User_Branch'});  
+    User_Branch.belongsTo(models.User);
+    User_Branch.belongsTo(models.Branch);  
   };
   return User_Branch;
 };

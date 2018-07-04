@@ -1,0 +1,38 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/cssPartial.ejs %>
+</head>
+    <body>
+    <% include ../partials/nav.ejs %>
+    <br>
+    <!DOCTYPE html>
+<html>
+<body>
+
+<h2>HTML Forms</h2>
+
+<form action="/users/<%=user.id%>/play" method="POST">
+  First name:<br>
+  <input type="text" name="firstName" value="<%= user.firstName%>">
+  <br>
+  Last name:<br>
+  <input type="text" name="lastName" value="<%= user.lastName%>">
+  <br>
+  Select Branch:<br>
+  <select name="BranchId">
+      <%branchs.forEach(branch => { %>
+        <option value="<%= branch.id%>"><%= branch.branchName%></option>
+      <% })%>
+  </select>
+  <br><br>
+  <input type="submit" value="Submit">
+</form> 
+</body>
+</html>
+
+    <br>
+</body>
+</html>

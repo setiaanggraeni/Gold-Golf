@@ -1,0 +1,22 @@
+<table>
+    <tr>
+      <th>Id</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Address</th>
+      <th>Options</th>
+    </tr>
+    <tr>
+          <tr>
+          <td><%=user.id%></td>
+          <td><%=user.firstName%></td>
+          <td><%=user.lastName%></td>
+          <td><%=user.email%></td>
+          <td><%=user.phone%></td>
+          <td><%=user.address%></td>
+          <td><a href="/members/<%=user.id%>/edit">Edit</a> || <a href="/members/<%=user.id%>/delete">Delete</a></td>
+      </tr>
+    </tr>
+  </table>

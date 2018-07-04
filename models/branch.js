@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     longtitude: DataTypes.STRING
   }, {});
   Branch.associate = function(models) {
-    Branch.hasMany(models.User)
+    Branch.belongsToMany(models.User, {through: 'User_Branch'})
+
   };
 
   return Branch;
