@@ -33,10 +33,11 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   // class method
-  User.getAge = function (areaId) {
+  User.getArea = function (areaId) {
     return User.findAll({
       where: {areaId}
     })
   }
+  
   return User;
 };
