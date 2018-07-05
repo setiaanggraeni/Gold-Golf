@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html>
-<body>
+<body bgcolor="#DAF7A6">
 <a href="/">Home</a>
 <h2>Register Forms</h2>
 
@@ -46,10 +46,11 @@
     <% branches.forEach(branch => { %>
       <option value="<%= branch.id%>"> <%= branch.branchName%></option>
     <% }) %>
-  </select>
-  <br><br>
-  <input type="submit" value="Register">
-  <a href="/login">Login</a>
+  </select><br>
+  <h1>
+  <input type="submit" value="Signup">
+  </h1>
+
 </form>
 </body>
 </html>

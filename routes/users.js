@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const model = require('../models')
-var GeoPoint = require('geopoint');
+
 
 router.get('/', function(req, res){
    model.User.findOne({
