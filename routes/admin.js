@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const model = require('../models')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op;
 
 router.get('/', function(req, res, next){
     if(req.session.current_user != null){
         if(req.session.current_user.isAdmin == 1){
-            model.User.findAll({include : [model.Branch]},{
+            model.User.findAll({include : [model.Branch],
                 where: { isAdmin : 0},
                 order: [['id', 'ASC']]
             })
@@ -57,8 +59,7 @@ router.get('/playing', function(req, res){
         attributes : [
             'id', 'UserId', 'BranchId'],
             where: {isPlaying : true}
-    }
-    )
+    })
     .then(usersPlaying => {
         // res.json(usersPlaying)
         res.render('admin/userPlaying', {usersPlaying})
@@ -74,6 +75,21 @@ router.get('/:id/delete', function(req, res){
     })
     .then(()=>{
         res.redirect('/admin')
+    })
+    .catch(err => {
+        res.send(err)
+    })
+})
+
+router.get('/search', function(req, res){
+    model.User.findAll({
+        where: {
+            username : {
+                [Op.like]: '%req.body.search%'}
+        }
+    })
+    .then(users =>{
+        res.render('admin/search', {users})
     })
     .catch(err => {
         res.send(err)

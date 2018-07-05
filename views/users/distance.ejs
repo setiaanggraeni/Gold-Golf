@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +12,7 @@
 
 <h2>Gold Golf</h2>
 
-<form action="/users/<%=user.id%>/play" method="POST">
+<form action="/users/<%=user.id%>/checkDistance" method="POST">
   User Id:<br>
   <input type="text" name="UserId" value="<%= user.id%>">
   <br>
@@ -24,15 +22,14 @@
   Last name:<br>
   <input type="text" name="lastName" value="<%= user.lastName%>">
   <br>
-  Select Branch:<br>
-  <select name="BranchId">
+  Select Your Prefered Branch to Come:
+  <select name="nextBranch">
       <%branchs.forEach(branch => { %>
         <option value="<%= branch.id%>"><%= branch.branchName%></option>
       <% })%>
   </select>
   <br><br>
-  <input type="submit" value="Submit">
-  <a href="/users/<%=user.id%>/checkDistance">Check Distance</a>
+  <input type="submit" value="Check Distance">
 </form> 
 </body>
 </html>

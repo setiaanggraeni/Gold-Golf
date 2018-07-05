@@ -4,6 +4,8 @@ const routes = require('./routes')
 const routesAdmin = require('./routes/admin')
 const routesUser = require('./routes/users')
 const session = require('express-session')
+const GeoPoint = require('geopoint');
+const Sequelize = require('sequelize')
 
 app.use(express.urlencoded ({extended: false}))
 app.locals.prefix = require('./helper/prefix')

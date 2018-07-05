@@ -23,6 +23,7 @@
     "express-session": "^1.15.6",
     "faker": "^4.1.0",
     "geolib": "^2.0.24",
+    "geopoint": "^1.0.1",
     "nodemailer": "^4.6.7",
     "pg": "^7.4.3",
     "sequelize": "^4.38.0",

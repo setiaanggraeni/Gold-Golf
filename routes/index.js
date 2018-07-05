@@ -44,6 +44,7 @@ router.get('/logout', function(req, res){
 router.get('/register', function(req, res){
     model.Branch.findAll()
     .then(branches => {
+        // res.json(branches)
         res.render('register', {branches})
     })
     .catch(err => {

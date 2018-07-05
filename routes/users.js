@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const model = require('../models')
-var GeoPoint = require('geopoint');
+const GeoPoint = require('geopoint');
 
 router.get('/', function(req, res){
    model.User.findOne({
@@ -90,20 +90,52 @@ router.post('/:id/edit', function(req, res){
     })
 })
 
-// router.get('/checkDistance', function(req, res){
-//     model.User.findOne({
-//         where: {id : req.session.current_user.id}
-//     })
-//     .then(user => {
-//         // user.fullName = user.getFullName()
-//         res.render('users/user', {user})
-//     })
-//     .catch(err => {
-//         res.send(err)
-//     })
-//  })
-// point1 = new GeoPoint(lat1, long1);
-// point2 = new GeoPoint(lat2, long2);
-// var distance = point1.distanceTo(point2, true)
+router.get('/:id/checkDistance', function(req, res){
+    model.User.findOne({
+        include : [model.Branch],
+            where: {id : req.session.current_user.id}
+    })
+    .then(user => {
+        model.Branch.findAll()
+        .then(branchs => {
+            res.render('users/distance', {user, branchs})
+        })
+        .catch(err => {
+            res.send(err)
+        })
+    })
+    .catch(err => {
+        res.send(err)
+    })
+})
+
+router.post('/:id/checkDistance', function(req, res){
+    model.User.findOne({
+        where: {id : req.session.current_user.id}
+    })
+    .then(user => {
+        // res.json(user)
+        model.Branch.findOne({
+            where: {id : req.body.nextBranch}
+        })
+        .then(branch => {
+            // res.json(branch)
+            var point1 = new GeoPoint(user.latitude, user.longitude);
+            // console.log("yang satu nihh -----------------",point1)
+            var point2 = new GeoPoint(branch.latitude, branch.longtitude);
+            // console.log("xxxxxxxxxxxxxxxyg uda nihhh",point2)
+            var distance = point1.distanceTo(point2, true)
+            res.send(distance)
+        })
+        .catch(err => {
+            res.send(err)
+        })
+    })
+    .catch(err => {
+        res.send(err)
+    })
+})
+
+
 
 module.exports = router
