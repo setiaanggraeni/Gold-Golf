@@ -1,4 +1,3 @@
-
 function sendEmail(email){
     var nodemailer = require('nodemailer');
     var transporter = nodemailer.createTransport({
@@ -8,14 +7,14 @@ function sendEmail(email){
           pass: 'ab12345.'
         }
       });
-      
+
       var mailOptions = {
         from: 'goldgolf920@gmail.com',
         to: email,
         subject: 'Thank you for register!',
         text: 'GG App!'
       };
-      
+
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
           console.log(error);

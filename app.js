@@ -3,17 +3,11 @@ const app = express()
 const routes = require('./routes')
 const routesAdmin = require('./routes/admin')
 const routesUser = require('./routes/users')
-
-
-const model = require('./models')
 const session = require('express-session')
-const passwordGenerator = require('./helper/crypto')
 
 app.use(express.urlencoded ({extended: false}))
 app.locals.prefix = require('./helper/prefix')
 // HARUS taruh session sebelum app.use
-
-
 app.use(session({
     secret: 'GG app',
     saveUninitialized: true,

@@ -6,8 +6,29 @@
 <body>
     <% include ../partials/nav.ejs %>
     <h2>Welcome to Gold Golf</h2>
-    <% include ../partials/userPartial.ejs %>
-
     <br>
+    <table>
+        <tr>
+          <th>Id</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Options</th>
+        </tr>
+        <tr>
+              <tr>
+              <td><%=user.id%></td>
+              <td><%= prefix(user.gender,user.fullName)%></td>
+              <td><%=user.email%></td>
+              <td><%=user.phone%></td>
+              <td><%=user.address%></td>
+              <td><a href="/users/<%=user.id%>/play">Play</a> || <a href="/users/<%=user.id%>/finish" onclick="return confirm ('Finish you golfing?')">Finish</a>
+              </td>
+          </tr>
+        </tr>
+      </table>
+    <br>
+    <p><a href="/users/<%=user.id%>/edit">Edit</a></p>
 </body>
 </html>

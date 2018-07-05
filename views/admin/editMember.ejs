@@ -1,20 +1,13 @@
-<table>
-    <tr>
-      <th>Id</th>
-      <th>Full Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Address</th>
-      <th>Actions</th>
-    </tr>
-    <tr>
-          <tr>
-          <td><%=user.id%></td>
-          <td><%=user.firstName%></td>
-          <td><%=user.email%></td>
-          <td><%=user.phone%></td>
-          <td><%=user.address%></td>
-          <td><a href="/users/<%=user.id%>/edit">Edit</a> || <a href="/users/<%=user.id%>/play">Play</a>
+<!DOCTYPE html>
+<html>
+<body>
 
-    </tr>
-  </table>
+<h2>Edit Member</h2>
+
+<form action="/admin/<%=editMember.id%>/edit" method="POST">
+    <% include ../partials/edit.ejs %>
+  <br><br>
+  <input type="submit" value="Edit User">
+</form>
+</body>
+</html>

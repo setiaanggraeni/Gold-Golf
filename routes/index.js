@@ -1,12 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const model = require('../models')
-
-const passwordGenerator = require('../helper/crypto')
-
 const sendEmail = require('../routes/nodeMailer')
 const bcrypt = require('bcrypt')
-
 
 router.get('/', function(req, res){
     res.render('home')
@@ -19,12 +15,10 @@ router.get('/login', function(req, res, next){
 
 router.post('/login', function(req, res){
     model.User.findOne({
-        where: {username : req.body.username,
-                password : passwordGenerator(req.body.password)}
+        where: {username : req.body.username}
     })
     .then(user =>{
         if(user){
-
             var check = bcrypt.compareSync(req.body.password, user.password)
             if(check){
                 req.session.current_user = user
@@ -36,7 +30,6 @@ router.post('/login', function(req, res){
             else{
                 res.send('Wrong password!')
             }
-
         } else{
             res.send('User not found!')
         }
@@ -63,7 +56,7 @@ router.post('/register', function(req, res){
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         username: req.body.username,
-        password: passwordGenerator(req.body.password),
+        password: req.body.password,
         birthdate: req.body.birthdate,
         email: req.body.email,
         phone: req.body.phone,

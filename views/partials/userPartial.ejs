@@ -5,16 +5,16 @@
       <th>Email</th>
       <th>Phone</th>
       <th>Address</th>
-      <th>Actions</th>
+      <th>Options</th>
     </tr>
     <tr>
           <tr>
           <td><%=user.id%></td>
-          <td><%=user.firstName%></td>
+          <td><%= prefix(user.gender,user.fullName)%></td>
           <td><%=user.email%></td>
           <td><%=user.phone%></td>
           <td><%=user.address%></td>
-          <td><a href="/users/<%=user.id%>/edit">Edit</a> || <a href="/users/<%=user.id%>/play">Play</a>
-
+          <td><a href="/users/<%=user.id%>/edit">Edit</a> || <a href="/users/<%=user.id%>/delete" onclick="return confirm ('delete user?')">Delete</a></td>
+      </tr>
     </tr>
   </table>
