@@ -23,7 +23,7 @@ router.get('/', function(req, res, next){
 
 router.get('/:id/edit', function(req, res){
     let id = req.params.id
-    model.User.findOne(id)
+    model.User.findById(id)
     .then(user => {
         res.render('admin/editMember')
     })
@@ -33,11 +33,11 @@ router.get('/:id/edit', function(req, res){
 })
 
 router.post('/:id/edit', function(req, res){
-    model.User.Update({
+    model.User.update({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         username: req.body.username,
-        password: passwordGenerator(req.body.password),
+        password: req.body.password,
         birthdate: req.body.birthdate,
         email: req.body.email,
         phone: req.body.phone,

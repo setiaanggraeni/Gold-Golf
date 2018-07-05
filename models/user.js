@@ -1,4 +1,6 @@
 'use strict';
+
+const bcrypt = require('bcrypt');
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
     firstName: DataTypes.STRING,
@@ -20,12 +22,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: (user, options) => {
-        if(user.gender === "female"){
-          user.firstName = `Mrs. ${user.firstName}`;
-        } else{
-          user.firstName = `Mr. ${user.firstName}`;
-        }
-      }
+        var salt = bcrypt.genSaltSync(5)
+        var hash = bcrypt.hashSync(user.password, salt)
+        user.password = hash
+      },
     }
   });
   
