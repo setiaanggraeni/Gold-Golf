@@ -1,7 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const model = require('../models')
+
 const passwordGenerator = require('../helper/crypto')
+
+const sendEmail = require('../routes/nodeMailer')
+const bcrypt = require('bcrypt')
+
 
 router.get('/', function(req, res){
     res.render('home')
@@ -19,8 +24,19 @@ router.post('/login', function(req, res){
     })
     .then(user =>{
         if(user){
-            req.session.current_user = user
-            res.redirect('/admin')
+
+            var check = bcrypt.compareSync(req.body.password, user.password)
+            if(check){
+                req.session.current_user = user
+                res.redirect('/admin')
+            } else if(req.body.password === user.password){
+                req.session.current_user = user
+                res.redirect('/admin')
+            }
+            else{
+                res.send('Wrong password!')
+            }
+
         } else{
             res.send('User not found!')
         }
@@ -58,6 +74,7 @@ router.post('/register', function(req, res){
         gender: req.body.gender
     })
     .then(user =>{
+        sendEmail(req.body.email)
        res.send('Thank you for submiting!')
     })
     .catch(err => {
