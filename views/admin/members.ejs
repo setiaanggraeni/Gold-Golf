@@ -5,6 +5,8 @@
 </head>
 <body>
 <% include ../partials/nav.ejs %>
+
+<a href="/admin/playing">Members Playing</a>
 <h2>List Members Gold Golf</h2>
 
 <table>
@@ -29,8 +31,14 @@
         <td><%=user.email%></td>
         <td><%=user.phone%></td>
         <td><%=user.address%></td>
-        <td><%=user.BranchId%></td>
-        <td><a href="/admin/<%=user.id%>/edit">Edit</a> || <a href="/admin/<%=user.id%>/delete">Delete</a></td>
+        <% if(user.Branches.length != 0){ %>
+          <%user.Branches.forEach(branch => { %>
+            <td><%=branch.branchName%></td>
+          <% }) %>
+        <% } else { %>
+          <td></td>
+       <% } %>
+        <td><a href="/admin/<%=user.id%>/edit">Edit</a> || <a href="/admin/<%=user.id%>/delete" onclick="return confirm ('Delete user?')">Delete</a></td>
       </tr>
       <% }) %>
   </tr>

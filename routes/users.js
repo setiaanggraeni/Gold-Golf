@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const model = require('../models')
+var GeoPoint = require('geopoint');
 
 router.get('/', function(req, res){
    model.User.findOne({
@@ -8,7 +9,6 @@ router.get('/', function(req, res){
    })
    .then(user => {
        user.fullName = user.getFullName()
-       
        res.render('users/user', {user})
    })
    .catch(err => {
@@ -33,11 +33,27 @@ router.get('/:id/play', function(req, res){
 
 router.post('/:id/play', function(req, res){
     model.User_Branch.create({
-        UserId : req.body.id,
-        BranchId: req.body.BranchId
+        UserId : req.body.UserId,
+        BranchId: req.body.BranchId,
+        isPlaying: true
     })
     .then(user => {
-        res.send('Enjoy your golfing!')
+        // res.render(user)
+        res.render('users/playing')
+    })
+    .catch(err => {
+        res.send(err)
+    })
+})
+
+router.get('/:id/finish', function(req, res){
+    model.User_Branch.update({
+        isPlaying: false,
+        isFinished: true
+    }, {where: {UserId : req.params.id}})
+    .then(user => {
+        // res.render(user)
+        res.redirect('/users')
     })
     .catch(err => {
         res.send(err)
@@ -47,8 +63,8 @@ router.post('/:id/play', function(req, res){
 router.get('/:id/edit', function(req, res){
     let id = req.params.id
     model.User.findById(id)
-    .then(user => {
-        res.render('users/editUser')
+    .then(editMember => {
+        res.render('users/editUser', {editMember})
     })
     .catch(err => {
         res.send(err)
@@ -61,14 +77,9 @@ router.post('/:id/edit', function(req, res){
         lastName: req.body.lastName,
         username: req.body.username,
         password: req.body.password,
-        birthdate: req.body.birthdate,
         email: req.body.email,
         phone: req.body.phone,
         address: req.body.address,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        BranchId: req.body.BranchId,
-        gender: req.body.gender
         }, {where: {id: req.params.id}
     })
     .then(userUpdate => {
@@ -78,5 +89,21 @@ router.post('/:id/edit', function(req, res){
         res.send(err)
     })
 })
+
+// router.get('/checkDistance', function(req, res){
+//     model.User.findOne({
+//         where: {id : req.session.current_user.id}
+//     })
+//     .then(user => {
+//         // user.fullName = user.getFullName()
+//         res.render('users/user', {user})
+//     })
+//     .catch(err => {
+//         res.send(err)
+//     })
+//  })
+// point1 = new GeoPoint(lat1, long1);
+// point2 = new GeoPoint(lat2, long2);
+// var distance = point1.distanceTo(point2, true)
 
 module.exports = router

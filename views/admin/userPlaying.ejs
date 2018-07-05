@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/cssPartial.ejs %>
+</head>
+<body>
+<% include ../partials/nav.ejs %>
+<h2>Members Playing</h2>
+
+<table>
+  <tr>
+    <th>No.</th>
+    <th>User</th>
+    <th>Branch</th>
+  </tr>
+  <tr>
+      <% usersPlaying.forEach(user => { %>
+        <tr>
+        <td><%=user.id%></td>
+        <td><%=user.User.firstName%></td>
+        <td><%=user.Branch.branchName%></td>
+      </tr>
+      <% }) %>
+  </tr>
+</table>
+<br>
+</body>
+</html>

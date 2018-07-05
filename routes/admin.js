@@ -5,10 +5,12 @@ const model = require('../models')
 router.get('/', function(req, res, next){
     if(req.session.current_user != null){
         if(req.session.current_user.isAdmin == 1){
-            model.User.findAll({
-                where: { isAdmin : 0}
+            model.User.findAll({include : [model.Branch]},{
+                where: { isAdmin : 0},
+                order: [['id', 'ASC']]
             })
             .then(users => {
+                // res.json(users)
                 res.render('admin/members', {users})
             })
         } else{
@@ -24,8 +26,8 @@ router.get('/', function(req, res, next){
 router.get('/:id/edit', function(req, res){
     let id = req.params.id
     model.User.findById(id)
-    .then(user => {
-        res.render('admin/editMember')
+    .then(editMember => {
+        res.render('admin/editMember', {editMember})
     })
     .catch(err => {
         res.send(err)
@@ -36,19 +38,41 @@ router.post('/:id/edit', function(req, res){
     model.User.update({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        username: req.body.username,
-        password: req.body.password,
-        birthdate: req.body.birthdate,
         email: req.body.email,
         phone: req.body.phone,
         address: req.body.address,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        BranchId: req.body.BranchId,
-        gender: req.body.gender
         }, {where: {id: req.params.id}
     })
     .then(userUpdate => {
+        res.redirect('/admin')
+    })
+    .catch(err => {
+        res.send(err)
+    })
+})
+
+router.get('/playing', function(req, res){
+    model.User_Branch.findAll({
+        include : [model.User, model.Branch],
+        attributes : [
+            'id', 'UserId', 'BranchId'],
+            where: {isPlaying : true}
+    }
+    )
+    .then(usersPlaying => {
+        // res.json(usersPlaying)
+        res.render('admin/userPlaying', {usersPlaying})
+    })
+    .catch(err => {
+        res.send(err)
+    })  
+})
+
+router.get('/:id/delete', function(req, res){
+    model.User.destroy({
+        where: {id :req.params.id}
+    })
+    .then(()=>{
         res.redirect('/admin')
     })
     .catch(err => {

@@ -1,4 +1,3 @@
-
 function prefix(gender,firstName){
     if(gender === "female"){
         return `Mrs. ${firstName}`;
