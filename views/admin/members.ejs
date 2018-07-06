@@ -6,7 +6,7 @@
 <body>
 <% include ../partials/nav.ejs %>
 <br>
-    <form action="/admin/search">
+    <form action="/admin/search" method="GET">
       <input type="text" placeholder="Search.." name="search">
       <button type="submit">O</button>
     </form>
@@ -41,7 +41,7 @@
             <td><%=branch.branchName%></td>
           <% }) %>
         <% } else { %>
-          <td></td>
+          <td><%=user.BranchId%></td>
        <% } %>
         <td><a href="/admin/<%=user.id%>/edit">Edit</a> || <a href="/admin/<%=user.id%>/delete" onclick="return confirm ('Delete user?')">Delete</a></td>
       </tr>

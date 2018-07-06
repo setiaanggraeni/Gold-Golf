@@ -45,7 +45,7 @@ router.get('/register', function(req, res){
     model.Branch.findAll()
     .then(branches => {
         // res.json(branches)
-        res.render('register', {branches})
+        res.render('register', {branches, err:null})
     })
     .catch(err => {
         res.send(err)
@@ -72,7 +72,14 @@ router.post('/register', function(req, res){
        res.send('Thank you for submiting!')
     })
     .catch(err => {
-        res.send(err)
+        model.Branch.findAll()
+        .then(branches => {
+            // res.json(branches)
+            res.render('register', {branches, err:err.message})
+        })
+        .catch(err => {
+            res.send(err)
+        })
     })
 })
 

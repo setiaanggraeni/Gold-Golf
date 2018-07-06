@@ -28,13 +28,18 @@
         <td><%=user.email%></td>
         <td><%=user.phone%></td>
         <td><%=user.address%></td>
-        <% if(user.Branches.length != 0){ %>
-          <%user.Branches.forEach(branch => { %>
-            <td><%=branch.branchName%></td>
-          <% }) %>
-        <% } else { %>
+        <%  if(user.Brancher != undefined){%>
+          <% if(user.Branches.length != 0){ %>
+            <%user.Branches.forEach(branch => { %>
+              <td><%=branch.branchName%></td>
+            <% }) %>
+          <% } else { %>
+            <td></td>
+          <% } %>
+          <%  } else {%>
           <td></td>
-       <% } %>
+          <% }%>
+        
         <td><a href="/admin/<%=user.id%>/edit">Edit</a> || <a href="/admin/<%=user.id%>/delete" onclick="return confirm ('Delete user?')">Delete</a></td>
       </tr>
       <% }) %>

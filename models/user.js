@@ -5,10 +5,43 @@ module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    username: DataTypes.STRING,
+    username: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty : {
+          args : true,
+          msg: "Username is required"
+        }
+      }
+    },
     password: DataTypes.STRING,
     birthdate: DataTypes.DATE,
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail:{
+          args: true,
+          msg : "Email format is incorrect"
+        },
+        isUnique (value, next){
+          User.findAll({
+            where: {
+              email: value
+            }
+          })
+          .then(emailUser => {
+            if(emailUser.length == 0){
+              next()
+            } else{
+              next('Email already exist!')
+            }
+          })
+          .catch(err => {
+            res.send(err.message)
+          })
+        }
+      }
+    },
     phone: DataTypes.STRING,
     address: DataTypes.STRING,
     BranchId: DataTypes.INTEGER,
@@ -30,7 +63,8 @@ module.exports = (sequelize, DataTypes) => {
   });
   
   User.associate = function(models) {
-    User.belongsToMany(models.Branch, {through: 'User_Branch'})
+    User.belongsToMany(models.Branch, {through: 'User_Branch'}),
+    User.belongsTo(models.Branch)
   };
 
   // instance method

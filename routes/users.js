@@ -120,12 +120,14 @@ router.post('/:id/checkDistance', function(req, res){
         })
         .then(branch => {
             // res.json(branch)
-            var point1 = new GeoPoint(user.latitude, user.longitude);
+            var point1 = new GeoPoint(Number(user.latitude), Number(user.longitude));
             // console.log("yang satu nihh -----------------",point1)
-            var point2 = new GeoPoint(branch.latitude, branch.longtitude);
+            var point2 = new GeoPoint(Number(branch.latitude), Number(branch.longtitude));
             // console.log("xxxxxxxxxxxxxxxyg uda nihhh",point2)
             var distance = point1.distanceTo(point2, true)
-            res.send(distance)
+            var km = Math.round(distance)
+            res.render('users/getDistance', {km})
+            // res.json(km)
         })
         .catch(err => {
             res.send(err)

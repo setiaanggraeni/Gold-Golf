@@ -12,8 +12,8 @@ router.get('/', function(req, res, next){
                 order: [['id', 'ASC']]
             })
             .then(users => {
-                // res.json(users)
-                res.render('admin/members', {users})
+                res.json(users)
+                // res.render('admin/members', {users})
             })
         } else{
             res.redirect('/users')
@@ -85,10 +85,11 @@ router.get('/search', function(req, res){
     model.User.findAll({
         where: {
             username : {
-                [Op.like]: '%req.body.search%'}
+                [Op.like]: "%"+ req.query.search+ "%"}
         }
     })
     .then(users =>{
+        // res.send(users)
         res.render('admin/search', {users})
     })
     .catch(err => {

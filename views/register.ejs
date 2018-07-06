@@ -3,6 +3,10 @@
 <body>
 <a href="/">Home</a>
 <h2>Register Forms</h2>
+  <% if(err !=undefined){ %>
+    <font color="red"><%= err %></font>
+  <% } %>
+
 <form action="/register" method="POST">
   First name:<br>
   <input type="text" name="firstName">
