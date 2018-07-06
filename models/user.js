@@ -45,8 +45,24 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING,
     address: DataTypes.STRING,
     BranchId: DataTypes.INTEGER,
-    latitude: DataTypes.STRING,
-    longitude: DataTypes.STRING,
+    latitude: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty : {
+          args : true,
+          msg: "Latitude is required"
+        }
+      }
+    },
+    longitude: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty : {
+          args : true,
+          msg: "Longtitude is required"
+        }
+      }
+    },
     isAdmin: {
       type: DataTypes.INTEGER,
       defaultValue: 0

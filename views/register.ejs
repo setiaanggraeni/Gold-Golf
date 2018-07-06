@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
-<body>
+<body bgcolor="#DAF7A6">
 <a href="/">Home</a>
 <h2>Register Forms</h2>
-  <% if(err !=undefined){ %>
-    <font color="red"><%= err %></font>
-  <% } %>
-
+<% if (err != undefined){ %>
+  <font color="red"> <%= err %></font>
+ <%}%>
 <form action="/register" method="POST">
   First name:<br>
   <input type="text" name="firstName">
@@ -24,7 +23,7 @@
   <input type="date" name="birthdate">
   <br>
   Email:<br>
-  <input type="text" name="email">
+  <input type="email" name="email">
   <br>
   Phone:<br>
   <input type="text" name="phone">
@@ -48,10 +47,11 @@
     <% branches.forEach(branch => { %>
       <option value="<%= branch.id%>"> <%= branch.branchName%></option>
     <% }) %>
-  </select>
-  <br><br>
-  <input type="submit" value="Register">
-  <a href="/login">Login</a>
-</form> 
+  </select><br>
+  <h1>
+  <input type="submit" value="Signup">
+  </h1>
+
+</form>
 </body>
 </html>
